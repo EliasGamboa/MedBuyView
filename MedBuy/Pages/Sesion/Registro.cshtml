@@ -1,0 +1,57 @@
+﻿@page
+@model MedBuy.Pages.Sesion.RegistroModel
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/Registro.css" />
+</head>
+    <p class="texto">Registro</p>
+    <div class="Registro">
+        <form id="formulario" method="post">
+
+            <span class="fontawesome-user"></span><input type="text" required placeholder="Nombre de usuario" autocomplete="off">
+            <span class="fontawesome-lock"></span><input type="password" name="password" id="password" required placeholder="Contraseña" autocomplete="off">
+            <input type="submit" value="Registrar" title="Registra tu cuenta">
+            </form>
+        <label id="mensaje"></label>
+        </div>
+
+<script>
+
+    /*submit = document.getElementById('submit')
+    const formulario = document.getElementById("formulario")
+    function registro() {
+        formulario.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const dt = new FormData(formulario);
+            fetch('https://localhost:44359/api/account/register', {
+                method: 'POST',
+                body: dt,
+
+            })
+                .then(response => response.json())
+                .then(json => console.log(json))
+        })
+    }*/
+
+    const $formulario = document.querySelector("#formulario")
+    const $label = document.querySelector('#mensaje')
+    function displayMessage(message) {
+        if (message)
+            $label.textContent = "Correcto"
+        else
+            $label.textContent = "Algo salio mal"
+    }
+    $formulario.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const dt = new FormData($formulario)
+        fetch('https://localhost:44359/api/account/register', {
+            method: 'POST',
+            body: dt,
+        })
+
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => displayMessage(response));
+    })
+</script>

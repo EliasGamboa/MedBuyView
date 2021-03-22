@@ -1,0 +1,54 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Login</title>
+
+    <link rel="stylesheet" href="~/css/Index.css" />
+
+</head>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img src="https://www.freeiconspng.com/thumbs/login-icon/user-login-icon-14.png" id="icon" alt="User Icon" />
+        </div>
+
+        <!-- Login Form -->
+        <form id="formulario"> 
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre de usuario">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="contraseña">
+            <input type="submit" class="fadeIn fourth" value="Log In" id="submit" onclick="inicio">
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <button onclick="location.href='/Sesion/Registro'">Registro</button>
+        </div>
+
+    </div>
+</div>
+<script>
+    submit = document.getElementById("submit");
+    formulario = document.getElementById("formulario");
+    function inicio() {
+        formulario.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const dt = new FormData(formulario);
+            fetch('https://localhost:44359/account/login', {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: dt,
+            })
+                .then(res => res.json());
+        });
+    }
+</script>

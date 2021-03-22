@@ -1,0 +1,52 @@
+﻿@page
+@model MedBuy.Pages.InicioModel
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/Inicio.css" />
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row text-center text-white">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="display-4">MEDBUY</h1>
+                <p class="lead mb-0">Ingrese al apartado que desea</p>
+                
+                
+            </div>
+        </div>
+    </div><!-- End -->
+
+
+    <div class="container">
+        <div class="row text-center">
+
+            <!-- Team item -->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4">
+                    <img src="https://image.flaticon.com/icons/png/512/335/335829.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Venta</h5>
+                    <button onclick="location.href = '/Venta'">Ingresar</button>
+                </div>
+            </div><!-- End -->
+            <!-- Team item -->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4">
+                    <img src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Productos</h5>
+                    <button onclick="location.href = '/Productos/Productos'">Ingresar</button>
+                </div>
+            </div><!-- End -->
+            <!-- Team item -->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4">
+                    <img src="https://img.icons8.com/ios/452/receipt-approved.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Pedidos</h5>
+                    <button onclick="location.href = '/Pedidos/Pedidos'">Ingresar</button>
+                </div>
+            </div><!-- End -->
+            <!-- Team item -->
+        </div>
+    </div>
+
+</body>

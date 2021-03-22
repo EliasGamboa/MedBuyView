@@ -1,0 +1,56 @@
+﻿@page
+@model MedBuy.Pages.Productos.RegistrarModel
+@{
+}
+<head>
+    
+</head>
+
+<body>
+    <h1>Agregar Producto</h1>
+    <div>
+        <form id="formulario">
+            <input type="text" name="nombre" placeholder="Ingrese el nombre" size="100" />
+            <p></p>
+            <input type="text" name="sector" placeholder="Ingrese el sector" size="100" />
+            <p></p>
+            <input type="text" name="cantDisponible" placeholder="Ingrese la cantidad disponible" size="100" />
+            <p></p>
+            <input type="text" name="costo" placeholder="Ingrese el costo" size="100" />
+            <p></p>
+            <select name="activo">
+                Seleccione si es activo o no
+                <option value="True">Activo</option>
+                <option value="False">No activo</option>
+            </select>
+            <p></p>
+            <button type="submit">Agregar</button>
+            <button onclick="location.href='/Productos/Productos'">Cancelar</button>
+        </form>
+        <label id="mensaje">
+
+        </label>
+    </div>
+    <script>       
+        const $formulario = document.querySelector("#formulario")
+        const $label = document.querySelector('#mensaje')
+        function displayMessage(message) {
+            if (message)
+                $label.textContent = "Correcto"
+            else
+                $label.textContent = "Algo salio mal"
+        }
+        $formulario.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const dt = new FormData($formulario)
+            fetch('https://localhost:44359/api/producto', {
+                method: 'POST',
+                body: dt,
+            })
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => displayMessage(response));
+        })
+    </script>
+</body>
+ 

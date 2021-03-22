@@ -1,0 +1,23 @@
+﻿body {
+    background:aqua;
+}
+table{
+    width: 100%;
+    border: 1px solid black;
+    border-collapse:collapse;
+}
+td{
+    padding: 15px;
+    background-color:aquamarine;
+}
+th{
+    padding: 15px;
+    background-color: aqua;
+}
+h1{
+    text-align: center;
+}
+div{
+    text-align:center;
+    align-items: center;
+}

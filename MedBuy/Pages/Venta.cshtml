@@ -1,0 +1,166 @@
+﻿@page
+@model MedBuy.Pages.VentaModel
+@{
+}
+<head>
+    <title>Ventas</title>
+    <link rel="stylesheet" href="~/css/Ventas.css" />
+</head>
+<header>
+    
+    <h1>Venta</h1>
+    </header>
+    <body>
+
+        <div id="ctn-icon-search">
+            <div class="icon-search">
+                <i class="fas fa-search" id="icono">¿Que producto desea buscar?</i>
+            </div>
+        </div>
+        <div id="ctn-bars-search">
+            <div class="bars-search">
+                <input type="text" id="inputSearch" placeholder="Ingrese el nombre del producto" autocomplete="off" />
+                <button class="buttonSearch" id="buttonSearch" type="submit" onclick="buscar()">Añadir</button>
+
+            </div>
+
+        </div>
+        <div id="contenido" class="contenido">
+            <ul id="box-search" class="box-search">
+            </ul>
+        </div>
+        <div id="cover-ctn-search">
+            <h4>Productos agregados al carrito</h4>
+            <table class="table table-striped" id="tabla">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Costo</th>
+                        <th scope="col">cantidades</th>
+                        <th scope="col">acción</th>
+                        <th scope="col">CostTotal</th>
+                    </tr>
+                </thead>
+                <tbody id="pventa">
+                </tbody>
+            </table>
+            <form id="formulario">
+                <label>Total: $<span id="total-amount"></span></label>
+                <button id="ButtonSell" type="submit" onclick="$formulario">Vender</button>
+            </form>
+        </div>
+    </body>
+    <script>
+        //carrito
+        const tabla = document.querySelector("#tabla")
+        const pventa = document.querySelector("#pventa")
+        const ctnbarssearch = document.querySelector("#ctn-bars-search")
+        const inputSearch = document.querySelector("#inputSearch")
+        const buttonSearch = document.querySelector("#buttonSearch");
+        const buttonSell = document.querySelector("#ButtonSell");
+        const $formulario = document.querySelector("#formulario")
+
+        let data = [];
+        let carrito = [];
+        let totalCarrito = 0;
+        let pedidos = [];
+        //carrito
+        const renderCarrito = () => {
+            let tBody = document.getElementById("pventa");
+            tBody.innerHTML = "";
+            totalCarrito = 0;
+
+            carrito.forEach((p, idx) => {
+                p.total = p.cantidad * p.Costo;
+                totalCarrito += p.total;
+                tBody.innerHTML += `
+                 <tr>
+                        <th scope="row">${p.ProductoId}</th>
+                        <td>${p.Nombre}</td>
+                        <td>${p.Costo}</td>
+                        <td>${p.cantidad}</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="sumarProducto(${idx})">
+                                +
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="restarProducto(${idx})">
+                                -
+                            </button>
+                        </td>
+                        <td>$<span>${p.total}</span></td>
+                    </tr>
+                `;
+
+            });
+
+            renderTotal();
+
+        }
+
+
+
+        const renderTotal = () => {
+
+            let totalCarritoBox = document.getElementById("total-amount");
+            totalCarritoBox.innerHTML = totalCarrito.toFixed(2);
+
+        }
+
+        renderTotal(); // Para renderizar el ttoal del carrito
+
+        const sumarProducto = (indice) => {
+            console.log(`sumar al indice ${indice}`, carrito[indice], carrito);
+            carrito[indice].cantidad++;
+            renderCarrito();
+        }
+
+        const restarProducto = (indice) => {
+            if (carrito[indice].cantidad > 0) {
+
+                carrito[indice].cantidad--;
+                renderCarrito();
+
+            }
+        }
+
+        async function getProd() {
+            let response = await fetch('https://localhost:44359/api/producto');
+            return response.json();
+        }
+
+        const buscar = () => {
+            const text = inputSearch.value.toLowerCase();
+
+            for (let valor of data.Data) {
+                let nombre = valor.Nombre.toLowerCase();
+                if (nombre.indexOf(text) !== -1) {
+                    let productoCopia = Object.assign({}, valor);
+                    productoCopia.cantidad = 1;
+                    carrito.push(productoCopia);
+                    renderCarrito();
+                }
+
+            }
+        }
+
+        
+
+            (async function () {
+                data = await getProd();
+            })()
+        //Fin carrito
+        //Venta y pedido
+        $formulario.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const dt = new FormData($formulario)
+            fetch('https://localhost:44359/api/pedido', {
+                method: 'POST',
+                body: dt,
+            })
+                .then(res => res.json());
+            
+        })
+
+        //Fin venta y pedido
+        </script>

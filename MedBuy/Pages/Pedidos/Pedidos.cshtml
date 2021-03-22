@@ -1,0 +1,58 @@
+﻿@page
+@model MedBuy.Pages.Pedidos.PedidosModel
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/tabla.css"/>
+</head>
+<h1>Pedidos</h1>
+<body onload="obtener()">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Costo Total</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Cantidad</th>
+            </tr>
+        </thead>
+        <tbody id="contenido">
+        </tbody>
+    </table>
+
+
+    <script>
+    var contenido = document.querySelector('#contenido')
+    function obtener() {
+        fetch('https://localhost:44359/api/pedido')
+            .then(res => res.json())
+            .then(data => {
+                tabla(data)
+            })
+    }
+
+    function tabla(data) {
+        contenido.innerHTML = ''
+        for (const valor of data.Data) {
+            contenido.innerHTML += `
+            <tr>
+                <th scope="row">${valor.PedidoId}</th>
+                        <td>${valor.CostTotal}</td>
+                        <td>${valor.Fecharealizacion}</td>
+                        <td>${valor.Cantidad}</td>
+                        <td><button class="btn btn-danger" onclick="deleteProd(${valor.PedidoId}) ">Eliminar</button></td>
+            </tr>
+`
+        }
+    }
+    function deleteProd(PedidoId) {
+        fetch(`https://localhost:44359/api/pedido/${PedidoId}`,
+            {
+                method: 'DELETE'
+            })
+            .then(() => obtener())
+            .catch(error => console.error('No se pudo eliminar', error))
+    }
+
+    </script>
+</body>

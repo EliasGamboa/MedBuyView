@@ -1,0 +1,78 @@
+﻿@page
+@model MedBuy.Pages.Productos.EditarModel
+@{
+}
+<h1>Editar Producto</h1>
+<body>
+    <div class="container m-5">
+        <form id="editar" method="post">
+            <input type="hidden" id="id" />
+            <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre" size="100" />
+            <p></p>
+            <input type="text" id="sector" name="sector" placeholder="Ingrese el sector" size="100" />
+            <p></p>
+            <input type="text" id="cantDisponible" name="cantDisponible" placeholder="Ingrese la cantidad disponible" size="100" />
+            <p></p>
+            <input type="text" id="costo" name="costo" placeholder="Ingrese el costo" size="100" />
+            <p></p>
+            <select id="activo" name="activo">
+                <option value="true">Activo</option>
+                <option value="false">No Activo</option>
+            </select>
+            <button type="submit">Actuaizar</button>
+            <button onclick="location.href='/Productos/Productos'">Cancelar</button>
+
+        </form>
+        <div class="alert-success" id="mensaje">
+
+        </div>
+
+    </div>
+    <div class="alert-success" id="mensaje">
+
+    </div>
+    </body>
+    <script>
+        const $editar = document.querySelector("#editar");
+            const $label = document.querySelector('#mensaje');
+        window.onload = function () {
+                let urlParams = new URLSearchParams(window.location.search);
+                let id = urlParams.get("id");
+            fetch(`https://localhost:44359/api/producto/${id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        let nombre = document.getElementById("nombre")
+                        nombre.value = data.Data.Nombre
+                        let sector = document.getElementById("sector")
+                        sector.value = data.Data.Sector
+                        let cantDisponible = document.getElementById("cantDisponible")
+                        cantDisponible.value = data.Data.CantDisponible
+                        let costo = document.getElementById("costo")
+                        costo.value = data.Data.Costo
+                        let activo = document.getElementById("activo")
+                        activo.value = data.Data.Activo
+                })
+            }
+        function displayMessage(message) {
+            if (message)
+                $label.textContent = "Correcto"
+            else
+                $label.textContent = "Algo salio mal"
+        }
+        $editar.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const $editar = document.querySelector("#editar");
+            let urlParams = new URLSearchParams(window.location.search);
+            let id = urlParams.get("id");
+            const dt = new FormData($editar)
+            fetch(`https://localhost:44359/api/producto/${id}`, {
+                headers: { 'Access-Control-Allow-Methods': 'PUT' },
+                method: 'PUT',
+                body: dt
+            })
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => displayMessage(response));
+        })
+    </script>
