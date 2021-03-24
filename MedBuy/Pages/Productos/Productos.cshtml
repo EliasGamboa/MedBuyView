@@ -7,6 +7,7 @@
 </head>
 
 <h1>Productos</h1>
+
 <body onload="obtener()">
 <table class="table table-striped">
     <thead>
@@ -48,7 +49,7 @@
                         <td>${valor.CantDisponible}</td>
                         <td>${valor.Costo}</td>
                         <td>${valor.Activo}</td>
-                        <td><button onclick="location.href='/Productos/Editar?id=${valor.ProductoId}'">Editar</button></td>
+                        <td><button class="btn btn-info" onclick="location.href='/Productos/Editar?id=${valor.ProductoId}'">Editar</button></td>
                         <td><button class="btn btn-danger" onclick="deleteProd(${valor.ProductoId}) ">Eliminar</button></td>
             </tr>
 `

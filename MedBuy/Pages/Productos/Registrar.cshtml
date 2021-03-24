@@ -3,20 +3,20 @@
 @{
 }
 <head>
-    
+    <link rel="stylesheet" href="~/css/RegistroProductos.css"/>
 </head>
 
 <body>
     <h1>Agregar Producto</h1>
     <div>
         <form id="formulario">
-            <input type="text" name="nombre" placeholder="Ingrese el nombre" size="100" />
+            <input type="text" name="nombre" placeholder="Ingrese el nombre" size="100" class="placeholder"/>
             <p></p>
-            <input type="text" name="sector" placeholder="Ingrese el sector" size="100" />
+            <input type="text" name="sector" placeholder="Ingrese el sector" size="100" class="placeholder"/>
             <p></p>
-            <input type="text" name="cantDisponible" placeholder="Ingrese la cantidad disponible" size="100" />
+            <input type="text" name="cantDisponible" placeholder="Ingrese la cantidad disponible" size="100" class="placeholder"/>
             <p></p>
-            <input type="text" name="costo" placeholder="Ingrese el costo" size="100" />
+            <input type="text" name="costo" placeholder="Ingrese el costo" size="100" class="placeholder"/>
             <p></p>
             <select name="activo">
                 Seleccione si es activo o no
@@ -24,8 +24,8 @@
                 <option value="False">No activo</option>
             </select>
             <p></p>
-            <button type="submit">Agregar</button>
-            <button onclick="location.href='/Productos/Productos'">Cancelar</button>
+            <button type="submit" class="btn btn-success">Agregar</button>
+            <button onclick="location.href='/Productos/Productos'" class="btn btn-danger">Cancelar</button>
         </form>
         <label id="mensaje">
 
